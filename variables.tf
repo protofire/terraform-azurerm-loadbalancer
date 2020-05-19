@@ -12,6 +12,10 @@ variable "prefix" {
   default     = "azure_lb"
 }
 
+variable "region_prefix" {
+  description = "(Reqiured) Unique prefix to use within region multiple LBs"
+}
+
 variable "remote_port" {
   description = "Protocols to be used for remote vm access. [protocol, backend_port].  Frontend port will be automatically generated starting at 50000 and in the output."
   default     = {}

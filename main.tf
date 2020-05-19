@@ -1,6 +1,6 @@
 resource "azurerm_public_ip" "azlb" {
   count               = var.type == "public" ? 1 : 0
-  name                = "${var.prefix}-publicIP"
+  name                = "${var.prefix}-publicIP-${var.region_prefix}"
   resource_group_name = var.resource_group_name
   location            = var.location
   allocation_method   = var.allocation_method
@@ -8,7 +8,7 @@ resource "azurerm_public_ip" "azlb" {
 }
 
 resource "azurerm_lb" "azlb" {
-  name                = "${var.prefix}-lb"
+  name                = "${var.prefix}-lb-${var.region_prefix}"
   resource_group_name = var.resource_group_name
   location            = var.location
   tags                = var.tags
