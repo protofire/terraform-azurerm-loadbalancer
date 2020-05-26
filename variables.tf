@@ -26,6 +26,11 @@ variable "lb_port" {
   default     = {}
 }
 
+variable "lb_hc" {
+  description = "Load balancer health check HTTP config. [protocol, port, path]"
+  default     = {}
+}
+
 variable "lb_probe_unhealthy_threshold" {
   description = "Number of times the load balancer health probe has an unsuccessful attempt before considering the endpoint unhealthy."
   default     = 2

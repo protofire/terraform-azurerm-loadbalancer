@@ -13,6 +13,11 @@ output "azurerm_lb_probe_ids" {
   value       = "${azurerm_lb_probe.azlb.*.id}"
 }
 
+output "azurerm_lb_hc" {
+  description = "the ids for the azurerm_lb_probe resources"
+  value       = "${azurerm_lb_probe.hc.*.id}"
+}
+
 output "azurerm_lb_nat_rule_ids" {
   description = "the ids for the azurerm_lb_nat_rule resources"
   value       = "${azurerm_lb_nat_rule.azlb.*.id}"
