@@ -17,16 +17,19 @@ variable "region_prefix" {
 }
 
 variable "remote_port" {
+  type        = map(list(string))
   description = "Protocols to be used for remote vm access. [protocol, backend_port].  Frontend port will be automatically generated starting at 50000 and in the output."
   default     = {}
 }
 
 variable "lb_port" {
+  type        = map(list(string))
   description = "Protocols to be used for lb health probes and rules. [frontend_port, protocol, backend_port]"
   default     = {}
 }
 
 variable "lb_hc" {
+  type        = map(list(string))
   description = "Load balancer health check HTTP config. [protocol, port, path]"
   default     = {}
 }
