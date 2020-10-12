@@ -64,11 +64,11 @@ resource "azurerm_lb_probe" "hc" {
 }
 
 resource "azurerm_lb_rule" "hc" {
-  count                          = length(azurerm_lb_probe.hc)
+  count                          = length(var.lb_hc)
   name                           = element(keys(var.lb_hc), count.index)
   resource_group_name            = var.resource_group_name
   loadbalancer_id                = azurerm_lb.azlb.id
-  protocol                       = "Tcp" 
+  protocol                       = "Tcp"
   frontend_port                  = element(var.lb_hc[element(keys(var.lb_hc), count.index)], 1)
   backend_port                   = element(var.lb_hc[element(keys(var.lb_hc), count.index)], 1)
   frontend_ip_configuration_name = var.frontend_name
@@ -79,7 +79,7 @@ resource "azurerm_lb_rule" "hc" {
 }
 
 resource "azurerm_lb_rule" "azlb" {
-  count                          = length(azurerm_lb_probe.azlb)
+  count                          = length(var.lb_port)
   name                           = element(keys(var.lb_port), count.index)
   resource_group_name            = var.resource_group_name
   loadbalancer_id                = azurerm_lb.azlb.id
