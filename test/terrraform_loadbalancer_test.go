@@ -4,28 +4,28 @@ import (
 	"testing"
 
 	"github.com/gruntwork-io/terratest/modules/terraform"
-	"github.com/gruntwork-io/terratest/modules/test-structure"
+	testStructure "github.com/gruntwork-io/terratest/modules/test-structure"
 )
 
-func TestTerraformLoadbalancer(t *testing.T) {
+func TestTerraformLoadBalancer(t *testing.T) {
 	t.Parallel()
 
 	fixtureFolder := "./fixture"
 
 	// Deploy the example
-	test_structure.RunTestStage(t, "setup", func() {
-		terraformOptions := configureTerraformOptions(t, fixtureFolder)
+	testStructure.RunTestStage(t, "setup", func() {
+		terraformOptions := configureTerraformOptions(fixtureFolder)
 
 		// Save the options so later test stages can use them
-		test_structure.SaveTerraformOptions(t, fixtureFolder, terraformOptions)
+		testStructure.SaveTerraformOptions(t, fixtureFolder, terraformOptions)
 
 		// This will init and apply the resources and fail the test if there are any errors
 		terraform.InitAndApply(t, terraformOptions)
 	})
 
 	// Check whether the length of output meets the requirement. In public case, we check whether there occurs a public IP.
-	test_structure.RunTestStage(t, "validate", func() {
-		terraformOptions := test_structure.LoadTerraformOptions(t, fixtureFolder)
+	testStructure.RunTestStage(t, "validate", func() {
+		terraformOptions := testStructure.LoadTerraformOptions(t, fixtureFolder)
 
 		publicIP := terraform.Output(t, terraformOptions, "public_ip")
 		if len(publicIP) <= 0 {
@@ -34,14 +34,14 @@ func TestTerraformLoadbalancer(t *testing.T) {
 	})
 
 	// At the end of the test, clean up any resources that were created
-	test_structure.RunTestStage(t, "teardown", func() {
-		terraformOptions := test_structure.LoadTerraformOptions(t, fixtureFolder)
+	testStructure.RunTestStage(t, "teardown", func() {
+		terraformOptions := testStructure.LoadTerraformOptions(t, fixtureFolder)
 		terraform.Destroy(t, terraformOptions)
 	})
 
 }
 
-func configureTerraformOptions(t *testing.T, fixtureFolder string) *terraform.Options {
+func configureTerraformOptions(fixtureFolder string) *terraform.Options {
 
 	terraformOptions := &terraform.Options{
 		// The path to where our Terraform code is located
